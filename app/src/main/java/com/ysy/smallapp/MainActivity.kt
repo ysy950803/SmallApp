@@ -1,10 +1,9 @@
 package com.ysy.smallapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -12,13 +11,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val edtText = findViewById<EditText>(R.id.edt_main)
-
-        findViewById<View>(R.id.btn_main).setOnClickListener {
+        btn_main.setOnClickListener {
             startActivity(Intent().apply {
-                val id = edtText.text.toString().toInt() % 5
+                val id = edt_main.text.toString().toInt() % 5
                 setClassName(this@MainActivity, "com.ysy.smallapp.SmallActivity\$Small$id")
             })
         }
+    }
+
+    // 另一种方式，仅供参考
+    fun startSmallAppAtNewTask() {
+        startActivity(Intent().apply {
+            setClassName(this@MainActivity, "com.xxx.xxx.XXXActivity")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT and Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        })
     }
 }
